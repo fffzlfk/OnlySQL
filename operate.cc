@@ -223,14 +223,12 @@ void insert_into(char *table_name, struct insert_value_t* insert_value) {
 
     path = "./DB/" + DbName + "/" + string(table_name) + ".txt";
     ofstream out(path, ios::app);
-    auto cnt = 0;
     while (insert_value) {
         out << insert_value->data << " ";
         insert_value = insert_value->next;
-        cnt++;
     }
     out << endl;
-    printf("Successfully run, insert %d rows\n", cnt);
+    printf("Successfully run, insert 1 rows\n");
     out.close();
 }
 

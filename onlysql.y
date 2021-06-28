@@ -175,7 +175,7 @@ colnames		:	colnames ',' colname
 				|	colname
 				;
 
-valuesargs		:	VALUES'('values')'  { $$ = $3; while($3) { $3 = $3->next;} }
+valuesargs		:	VALUES'('values')'  { $$ = $3; }
 				;
 
 values			:	value 				{$$ = $1; }
@@ -196,9 +196,11 @@ value			:	STRING {$$ = new struct insert_value_t;
 							 calculate($1);
 							 $$ = new struct insert_value_t;
 							 if ($1->valuetype == 1) {
-								 $$->data = (char*)to_string($1->intnum).c_str();
+								 $$->data = new char[to_string($1->intnum).length()+1];
+								 strcpy($$->data, (char*)to_string($1->intnum).c_str());
 							 } else if ($1->valuetype == 2) {
-								 $$->data = (char*)to_string($1->doublenum).c_str();
+								 $$->data = new char[to_string($1->doublenum).length()+1];
+								 strcpy($$->data, (char*)to_string($1->doublenum).c_str());
 							 }
 							 $$->next = nullptr;
 							}
